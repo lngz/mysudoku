@@ -25,6 +25,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
     def _createDisplay(self):
         """Create the display."""
         # Create the display widget
+        self.btnClicked()
         
         # Add the display to the general layout
         # self.ui.generalLayout.addWidget(self.display)

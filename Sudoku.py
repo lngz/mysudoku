@@ -190,19 +190,77 @@ class Solution:
                             # print(question[y+pos//3][x+pos%3])
                             count +=1
 
+            for y in range(0,9):
+                checkblock = self.impsible_block[y]
+
+                for i in  ['1', '2', '3', '4', '5', '6', '7', '8', '9'] :
+                    
+                    countblock = 0
+                    for j in range(9):
+                        # print (a[j])
+                        if i in checkblock[j]:
+                            pass
+                        else:
+                            countblock +=1
+                            pos = j
+                            
+                    if countblock == 1:                    
+                        # print(y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3])
+                        question[y][pos] = i
+                        # self.display(question)
+                        # print("第%d行，第%d列，只有一个答案，是：%s" % (y+1 , pos+1, question[y][pos]))
+
+                        count +=1
+
+            for x in range(0,9):
+                checkblock = [self.impsible_block[0][x], self.impsible_block[1][x], self.impsible_block[2][x], 
+                            self.impsible_block[3][x], self.impsible_block[4][x], self.impsible_block[5][x], 
+                            self.impsible_block[6][x], self.impsible_block[7][x], self.impsible_block[8][x]]
+
+                for i in  ['1', '2', '3', '4', '5', '6', '7', '8', '9'] :
+                    
+                    countblock = 0
+                    for j in range(9):
+                        # print (a[j])
+                        if i in checkblock[j]:
+                            pass
+                        else:
+                            countblock +=1
+                            pos = j
+                            
+                    if countblock == 1:                    
+                        # print(y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3])
+                        question[pos][x] = i
+                        # self.display(question)
+                        # print("第%d行，第%d列，只有一个答案，是：%s" % (pos+1 , x+1, question[pos][x]))
+
+                        count +=1
+
 
             if count == 0:
                 break
         return question
+    def display(self, question):
+    # print(chr(27)+'[2j')
+    # print('\033c')
+    # print('\x1bc')
+        for row in question:
+            print(row)
 
-# question = [[".","3",".", "9",".",".", "1",".","."],
-#             [".",".","9", ".",".","5", ".","7","."],
-#             ["6",".",".", ".",".",".", ".","9","."],
+if __name__ == "__main__":
+    
+    question = [[".","3",".", "9",".",".", "1",".","."],
+                [".",".","9", ".",".","5", ".","7","."],
+                ["6",".",".", ".",".",".", ".","9","."],
 
-#             ["3","8",".", ".",".",".", ".",".","."],
-#             [".",".",".", "2","1",".", ".",".","6"],
-#             [".",".",".", ".",".",".", ".",".","4"],
+                ["3","8",".", ".",".",".", ".",".","."],
+                [".",".",".", "2","1",".", ".",".","6"],
+                [".",".",".", ".",".",".", ".",".","4"],
 
-#             [".",".","4", "5",".",".", "7",".","2"],
-#             [".",".","7", ".",".","9", ".","8","."],
-#             [".",",",".", ".",".","7", ".",".","."]]
+                [".",".","4", "5",".",".", "7",".","2"],
+                [".",".","7", ".",".","9", ".","8","."],
+                [".",",",".", ".",".","7", ".",".","."]]
+    s = Solution()
+
+    s.solveSudoku(question)
+    s.display(question)
