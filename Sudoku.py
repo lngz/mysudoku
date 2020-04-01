@@ -13,15 +13,27 @@ class Solution:
         for y in range(9):
             self.posible_block.append([''] * 9)
 
+    def getPosibleblock(self):
+        return self.posible_block
 
-    def solveSudoku(self, board: List[List[str]]) -> None:
+    def getImposibleblock(self):
+        return self.impsible_block
+        
+
+
+    def solveSudoku(self, board: List[List[str]], onestep=False) -> None:
         """
         Do not return anything, modify board in-place instead.
         """
         # question = board
         question = copy.deepcopy(board)
-        question = self.solve(question)
+        question = self.solve(question,onestep)
 
+        if onestep :
+            for y in range(9):
+                board[y] = question[y]
+            return
+                # print(question[y])
         # for y in range(9):
         #     for x in range(9):
         #         print(x,y,question[y][x],impsible_block[y][x])
@@ -48,7 +60,7 @@ class Solution:
                 question1 = copy.deepcopy(question)
                 for e in i :
                     question1[e[1]][e[0]] = e[2]
-                question1 = self.solve(question1)
+                question1 = self.solve(question1,onestep)
 
                 if self.isFinished(question1):
                     # print("done")
@@ -146,7 +158,7 @@ class Solution:
 
     # impsible_block = [[''] * 9] * 9  
 
-    def solve(self, question):
+    def solve(self, question,onestep):
         while True:
             count = 0
             
@@ -162,6 +174,8 @@ class Solution:
                         # print(x, y,posible)
                         question[y][x] = self.posible_block[y][x][0]
                         count +=1
+                        if onestep :
+                            return question
 
             for y in range(0,9,3):
                 for x in range(0,9,3):
@@ -189,6 +203,8 @@ class Solution:
                             question[y+pos//3][x+pos%3] = i
                             # print(question[y+pos//3][x+pos%3])
                             count +=1
+                            if onestep :
+                                return question
 
             for y in range(0,9):
                 checkblock = self.impsible_block[y]
@@ -211,6 +227,8 @@ class Solution:
                         # print("第%d行，第%d列，只有一个答案，是：%s" % (y+1 , pos+1, question[y][pos]))
 
                         count +=1
+                        if onestep :
+                            return question
 
             for x in range(0,9):
                 checkblock = [self.impsible_block[0][x], self.impsible_block[1][x], self.impsible_block[2][x], 
@@ -235,6 +253,8 @@ class Solution:
                         # print("第%d行，第%d列，只有一个答案，是：%s" % (pos+1 , x+1, question[pos][x]))
 
                         count +=1
+                        if onestep :
+                            return question
 
 
             if count == 0:
@@ -261,6 +281,10 @@ if __name__ == "__main__":
                 [".",".","7", ".",".","9", ".","8","."],
                 [".",",",".", ".",".","7", ".",".","."]]
     s = Solution()
+    s.display(question)
 
-    s.solveSudoku(question)
+    s.solveSudoku(question,onestep=True)
+    s.solveSudoku(question,onestep=True)
+    s.solveSudoku(question,onestep=True)
+
     s.display(question)

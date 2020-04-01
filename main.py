@@ -19,6 +19,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui.pushButton.clicked.connect(self.btnClicked) # connecting the clicked signal with btnClicked slot
         # self.ui.pushButton_2.clicked.connect(self.close) # connecting the clicked signal with btnClicked slot
         self.ui.pushButton_2.clicked.connect(self.btnsolve) # connecting the clicked signal with btnClicked slot
+        self.ui.pushButton_3.clicked.connect(self.btngetone) # connecting the clicked signal with btnClicked slot
 
         self._createDisplay()
         
@@ -31,8 +32,27 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # self.ui.generalLayout.addWidget(self.display)
     def btnClicked(self):
 
+        # for i in range(81):
+        #     self.ui.block[i].setText(".")
+        question = [[".",".","1", ".","6",".", "8",".","."],
+            [".","5",".", "9",".",".", ".",".","."],
+            [".","3",".", ".",".","8", ".",".","9"],
+
+            [".","2",".", ".",".","6", "7","3","."],
+            ["7",".",".", ".",".",".", ".",".","8"],
+            [".","8","5", "1",".",".", ".","2","."],
+
+            ["3",".",".", "4",".",".", ".","1","."],
+            [".",".",".", ".",".","2", ".","9","."],
+            [".",".","6", ".","9",".", "5",".","."]]
         for i in range(81):
-            self.ui.block[i].setText(".")
+            x = (i % 9 )
+            y = (i //9 ) 
+            self.ui.block[i].setText(question[y][x])
+      
+
+
+
     def btnsolve(self):
 
         question = [[".",".",".", ".",".",".", ".",".","."],
@@ -62,6 +82,81 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             x = (i % 9 )
             y = (i //9 ) 
             self.ui.block[i].setText(question[y][x])
+    def btngetone(self):
+
+        # question = [[".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."],
+
+        #             [".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."],
+
+        #             [".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."],
+        #             [".",".",".", ".",".",".", ".",".","."]]
+        question = [[".","3",".", "9",".",".", "1",".","."],
+                [".",".","9", ".",".","5", ".","7","."],
+                ["6",".",".", ".",".",".", ".","9","."],
+
+                ["3","8",".", ".",".",".", ".",".","."],
+                [".",".",".", "2","1",".", ".",".","6"],
+                [".",".",".", ".",".",".", ".",".","4"],
+
+                [".",".","4", "5",".",".", "7",".","2"],
+                [".",".","7", ".",".","9", ".","8","."],
+                [".",",",".", ".",".","7", ".",".","."]]
+        posibleblock = [[".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."]]
+        imposibleblock = [[".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."],
+                    [".",".",".", ".",".",".", ".",".","."]]
+        x = 0
+        y = 0
+        for i in range(81):
+            x = (i % 9 )
+            y = (i //9 ) 
+            question[y][x] = self.ui.block[i].text()  
+        
+
+        s = Solution()
+
+        s.solveSudoku(question,True)
+        posibleblock = s.getPosibleblock()
+        imposibleblock = s.getImposibleblock()
+        
+        for i in range(81):
+            x = (i % 9 )
+            y = (i //9 ) 
+            self.ui.block[i].setText(question[y][x])
+
+        for i in range(81):
+            x = (i % 9 )
+            y = (i //9 ) 
+            self.ui.posibleblock[i].setText(''.join(posibleblock[y][x]))
+            
+
+        for i in range(81):
+            x = (i % 9 )
+            y = (i //9 ) 
+            self.ui.imposibleblock[i].setText(''.join(imposibleblock[y][x]))
       
 
 def main():
