@@ -161,7 +161,6 @@ class Solution:
     def solve(self, question,onestep):
         while True:
             count = 0
-            
             for y in range(9):
                 for x in range(9):
                     imposiblexy = self.imposible(x,y,question)
@@ -169,11 +168,17 @@ class Solution:
                     self.impsible_block[y][x] = imposiblexy
                     self.posible_block[y][x] = self.posible(x,y,question)
 
+
+
+            for y in range(9):
+                for x in range(9):
+
                     # print(x, y, question[y][x],posible,impsible_block[y][x])
                     if len(self.posible_block[y][x]) ==1 :
                         # print(x, y,posible)
                         question[y][x] = self.posible_block[y][x][0]
                         count +=1
+                        print("第%d行，第%d列，只有一个答案，是：%s" % (y+1 , x+1, question[y][x]))
                         if onestep :
                             return question
 
@@ -199,9 +204,10 @@ class Solution:
                                 pos = j
                         if countblock == 1:
                             # print("found one",i, pos//3,pos%3)
-                            # print(y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3])
+                            
                             question[y+pos//3][x+pos%3] = i
                             # print(question[y+pos//3][x+pos%3])
+                            print("第%d行，第%d列，只有一个答案，是：%s" % (y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3]))
                             count +=1
                             if onestep :
                                 return question
@@ -224,7 +230,7 @@ class Solution:
                         # print(y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3])
                         question[y][pos] = i
                         # self.display(question)
-                        # print("第%d行，第%d列，只有一个答案，是：%s" % (y+1 , pos+1, question[y][pos]))
+                        print("第%d行，第%d列，只有一个答案，是：%s" % (y+1 , pos+1, question[y][pos]))
 
                         count +=1
                         if onestep :
@@ -250,7 +256,7 @@ class Solution:
                         # print(y+pos//3 , x+pos%3, question[y+pos//3][x+pos%3])
                         question[pos][x] = i
                         # self.display(question)
-                        # print("第%d行，第%d列，只有一个答案，是：%s" % (pos+1 , x+1, question[pos][x]))
+                        print("第%d行，第%d列，只有一个答案，是：%s" % (pos+1 , x+1, question[pos][x]))
 
                         count +=1
                         if onestep :
